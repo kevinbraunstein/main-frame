@@ -18,7 +18,6 @@ window.addEventListener("message", (event) => {
   }
 
   console.log(`Received message from origin: ${event.origin}, data ${event.data}`);
-  console.log(`Message event source ` + event.source);
   
   const sourceIframe = iframes.find(
     (iframe) => iframe.contentWindow === event.source,
