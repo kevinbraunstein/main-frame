@@ -30,7 +30,7 @@ window.addEventListener("message", (event) => {
     return;
   }
   
-  event.source.postMessage("Response", event.origin);
+  event.source.postMessage("pong", event.origin);
 
 });
 </script>
