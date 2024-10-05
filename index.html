@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="myDIV"></div>
+
+<iframe id="iframe_1" src="https://kevin-braunstein.github.io/child-frame/"></iframe>
+
+<script>
+const trustedOrigin = "https://kevin-braunstein.github.io/child-frame/";
+
+const iframes = Array.from(document.querySelectorAll("iframe"));
+
+window.addEventListener("message", (event) => {
+  if (event.origin !== trustedOrigin) {
+    console.log(`Dropping message received from untrusted origin: ${event.origin}, data ${event.data}`);
+    return;
+  }
+
+  console.log(`Received message from origin: ${event.origin}, data ${event.data}`);
+  console.log(`Message event source ` + event.source);
+  
+  const sourceIframe = iframes.find(
+    (iframe) => iframe.contentWindow === event.source,
+  );
+  if (sourceIframe != undefined) {
+    console.log(`Message from iframe ` + sourceIframe);
+  } else {
+    console.log(`Message was not from a child iframe.`);
+    return;
+  }
+  
+  event.source.postMessage("Response", event.origin);
+
+});
+</script>
+
+</body>
+</html>
